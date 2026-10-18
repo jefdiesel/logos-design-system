@@ -25,6 +25,7 @@ qt_add_qml_module(logos_theme_qml
         Typography.qml
         DarkTheme.qml
         HighContrastTheme.qml
+        LightTheme.qml
     RESOURCES
         fonts/PublicSans-Bold.ttf
         fonts/PublicSans-Medium.ttf

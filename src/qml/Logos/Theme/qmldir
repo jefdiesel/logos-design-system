@@ -5,3 +5,4 @@ Spacing 1.0 Spacing.qml
 Typography 1.0 Typography.qml
 DarkTheme 1.0 DarkTheme.qml
 HighContrastTheme 1.0 HighContrastTheme.qml
+LightTheme 1.0 LightTheme.qml
