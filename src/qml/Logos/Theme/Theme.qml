@@ -9,6 +9,8 @@ QtObject {
     property Settings settings: Settings {
         category: "LogosDesignSystem"
         property string theme: "dark"
+        // Text size multiplier (0.85 to 1.6), set with setTextScale.
+        property real textScale: 1.0
     }
     
     // ===== RAW COLOR PALETTE (Design Tokens) =====
@@ -17,17 +19,19 @@ QtObject {
     
     // ===== DESIGN TOKENS =====
     readonly property Spacing spacing: Spacing {}
-    readonly property Typography typography: Typography {}
+    readonly property Typography typography: Typography { scale: theme.settings.textScale }
     
     // ===== THEME INSTANCES =====
     // Currently available themes - created first
     property var darkTheme: DarkTheme { colors: theme.colors }
+    property var highContrastTheme: HighContrastTheme { colors: theme.colors }
     // Add new theme instances here as needed
     
     // ===== AVAILABLE THEMES =====
     // Add new themes here as needed - defined after theme instances
     property var availableThemes: ({
-        "dark": darkTheme
+        "dark": darkTheme,
+        "high-contrast": highContrastTheme
         // Add more themes here:
         // "light": lightTheme,
         // "custom": customTheme
@@ -43,7 +47,7 @@ QtObject {
     }
     
     // ===== CONVENIENCE PROPERTIES =====
-    readonly property bool isDark: settings.theme === "dark"
+    readonly property bool isDark: settings.theme === "dark" || settings.theme === "high-contrast"
     readonly property string currentTheme: settings.theme
     readonly property var themeNames: Object.keys(availableThemes)
     
@@ -70,6 +74,12 @@ QtObject {
         setTheme("dark")
     }
     
+    // Text size: 1.0 is the design's own; clamped to 0.85-1.6.
+    readonly property real textScale: settings.textScale
+    function setTextScale(scale) {
+        settings.textScale = Math.max(0.85, Math.min(1.6, scale))
+    }
+
     // Helper to check if a theme is available
     function isThemeAvailable(themeName) {
         return availableThemes.hasOwnProperty(themeName)
